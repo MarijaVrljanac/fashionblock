@@ -234,12 +234,6 @@ function Homepage() {
 
       console.log(signedTxns);
 
-      //const dr = algosdk.createDryrun(algod, txns);
-
-      //test debugging
-      //const dryRunResult = await algod.dryrun(dr).do();
-      //console.log(dryRunResult);
-
       const { txId } = await algod.sendRawTransaction(signedTxns).do();
       const result = await waitForConfirmation(algod, txId, 4);
       console.log(result);
@@ -247,21 +241,6 @@ function Homepage() {
       console.error(`There was an error calling the rps app: ${e}`);
     }
   }
-
-  // Clear state
-  // {
-  //   "txn": {
-  //     "apan": 3,
-  //     "apid": 51,
-  //     "fee": 1000,
-  //     "fv": 13231,
-  //     "gh": "ALXYc8IX90hlq7olIdloOUZjWfbnA3Ix1N5vLn81zI8=",
-  //     "lv": 14231,
-  //     "note": "U93ZQy24zJ0=",
-  //     "snd": "LNTMAFSF43V7RQ7FBBRAWPXYZPVEBGKPNUELHHRFMCAWSARPFUYD2A623I",
-  //     "type": "appl"
-  //   }
-  // }
 
   useEffect(() => {
     // Reconnect to the session when the component is mounted
@@ -300,7 +279,7 @@ function Homepage() {
           <div className="main-content">
             {user ? (
               <a className="gradient-button" onClick={() => setOwner(false)}>
-                Join Game
+                Join
               </a>
             ) : (
               <a className="gradient-button" onClick={() => optInRpsApp()}>
@@ -561,39 +540,45 @@ function Homepage() {
                 className="gradient-button"
                 onClick={() => resolveRpsApplication()}
               >
-                Resolve Game
+                Resolve
               </a>
             ) : (
               <a className="gradient-button" onClick={() => setOwner(true)}>
-                Start Game
+                Start
               </a>
             )}
           </div>
         </>
       ) : (
-        <div className="main-content" style={{marginTop: "180px"}}>
+        <div className="main-content" style={{ marginTop: "180px" }}>
           <h3>Pick a role:</h3>
           <div className="button-wrapper">
-          <div className="card">
-                  <img src={designer} style={{width: "300px", height: "300px"}}></img>
-            <a
-              className="gradient-button"
-              onClick={() => setRole("fashiondesigner")}
-            >
-              Fashion designer
-            </a>
+            <div className="card">
+              <img
+                src={designer}
+                style={{ width: "300px", height: "300px" }}
+              ></img>
+              <a
+                className="gradient-button"
+                onClick={() => setRole("fashiondesigner")}
+              >
+                Fashion designer
+              </a>
             </div>
             <div className="card">
-                  <img src={customer} style={{width: "300px", height: "300px"}}></img>
-            <a
-              className="gradient-button"
-              onClick={() => {
-                setRole("customer");
-                navigate("/user");
-              }}
-            >
-              Customer
-            </a>
+              <img
+                src={customer}
+                style={{ width: "300px", height: "300px" }}
+              ></img>
+              <a
+                className="gradient-button"
+                onClick={() => {
+                  setRole("customer");
+                  navigate("/user");
+                }}
+              >
+                Customer
+              </a>
             </div>
           </div>
         </div>
