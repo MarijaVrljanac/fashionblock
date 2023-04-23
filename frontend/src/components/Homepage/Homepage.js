@@ -1,10 +1,6 @@
 import "../../App.css";
 import { PeraWalletConnect } from "@perawallet/connect";
 import algosdk, { waitForConfirmation } from "algosdk";
-import Button from "react-bootstrap/Button";
-import Container from "react-bootstrap/Container";
-import Row from "react-bootstrap/Row";
-import Col from "react-bootstrap/Col";
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import "./Homepage.css";
@@ -33,265 +29,6 @@ function Homepage() {
   const [realmaterial, setRealMaterial] = useState(null);
   const isConnectedToPeraWallet = !!accountAddress; //convert string to boolean
   const { customer } = useParams();
-
-  useEffect(() => {
-    // Reconnect to the session when the component is mounted
-    peraWallet
-      .reconnectSession()
-      .then((accounts) => {
-        peraWallet.connector.on("disconnect", handleDisconnectWalletClick);
-        console.log(accounts);
-        if (accounts.length) {
-          setAccountAddress(accounts[0]);
-        }
-      })
-      .catch((e) => console.log(e));
-  }, []);
-
-  return (
-    <Container>
-      <meta name="name" content="Testing frontend for makawe" />
-      <img className="logo" src={logo}></img>
-      <h1>fashionblock</h1>
-      <br/>
-      <Row>
-        <Col>
-          <Button
-            onClick={
-              isConnectedToPeraWallet
-                ? handleDisconnectWalletClick
-                : handleConnectWalletClick
-            }
-          >
-            {isConnectedToPeraWallet ? "Disconnect" : "Connect to Pera Wallet"}
-          </Button>
-        </Col>
-      </Row>
-      <br />
-      <Row>
-        <Col>
-          <Button onClick={() => optInRpsApp()}>OptIn</Button>
-        </Col>
-      </Row>
-      <br />
-      <Row>
-        {customer ? (
-          <>
-            <Col>
-              <Button onClick={() => setOwner(false)}>Join Game</Button>
-            </Col>
-            <Col>
-              <Button onClick={() => resolveRpsApplication()}>
-                Resolve Game
-              </Button>
-            </Col>
-          </>
-        ) : (
-          <Col>
-            <Button onClick={() => setOwner(true)}>Start Game</Button>
-          </Col>
-        )}
-      </Row>
-      <br />
-      <Row className="circle-wrap">
-        <Col>
-          <Button className="item"
-            onClick={
-              !!owner === true
-                ? () =>
-                    startRpsApplication(
-                      "UCJHKygxxmpjv5mnJhh0tVsIjt+JkTAJy2ToicycfSE=",
-                      "leather"
-                    )
-                : () => joinRpsApplication("leather")
-            }
-          >
-            Leather
-          </Button>
-        </Col>
-        <Col>
-          <Button className="item"
-            onClick={
-              !!owner === true
-                ? () =>
-                    startRpsApplication(
-                      "8sgZtnkN4waEf7ImZMN65DIXfY73JyHtI8ka79Ecz98=",
-                      "silk"
-                    )
-                : () => joinRpsApplication("silk")
-            }
-          >
-            Silk
-          </Button>
-        </Col>
-        <Col>
-        <Button className="item"
-            onClick={
-              !!owner === true
-                ? () =>
-                    startRpsApplication(
-                      "GtRNFDKuDoSwzXJ+TOeqc9LbkzocX8ZHTCklX+pvspE=",
-                      "polyester"
-                    )
-                : () => joinRpsApplication("polyester")
-            }
-          >
-            Polyester
-          </Button>
-        </Col>
-        <Col>
-          <Button className="item"
-            onClick={
-              !!owner === true
-                ? () =>
-                    startRpsApplication(
-                      "aeOZhRyEGZk9RnVwJf1R5BXgJ36N74yyg9++eGchLoo=",
-                      "cotton"
-                    )
-                : () => joinRpsApplication("cotton")
-            }
-          >
-            Cotton
-          </Button>
-        </Col>
-        <Col>
-          <Button className="item"
-            onClick={
-              !!owner === true
-                ? () =>
-                    startRpsApplication(
-                      "B60u8WB9KDg5rxtOgujGH/IR3iadRkg5ApXUB8AWL3o=",
-                      "linen"
-                    )
-                : () => joinRpsApplication("linen")
-            }
-          >
-            Linen
-          </Button>
-        </Col>
-        <Col>
-          <Button className="item"
-            onClick={
-              !!owner === true
-                ? () =>
-                    startRpsApplication(
-                      "/rZyoubqKZ2PHxsbvtdyFMkJw6iaMhTqomvuvkrM63w=",
-                      "wool"
-                    )
-                : () => joinRpsApplication("wool")
-            }
-          >
-            Wool
-          </Button>
-        </Col>
-        <Col>
-        <Button className="item"
-            onClick={
-              !!owner === true
-                ? () =>
-                    startRpsApplication(
-                      "8srChfPzOXbEN0nFxKqZrF21s2t0REruRWYanYjrSKQ=",
-                      "scuba"
-                    )
-                : () => joinRpsApplication("scuba")
-            }
-          >
-            Scuba
-          </Button>
-        </Col>
-        <Col>
-          <Button className="item"
-            onClick={
-              !!owner === true
-                ? () =>
-                    startRpsApplication(
-                      "uazgThGkuWeiLLiTebMMEx0T74G+qI3LEZL7ld67SeQ=",
-                      "cashmere"
-                    )
-                : () => joinRpsApplication("cashmere")
-            }
-          >
-            Cashmere
-          </Button>
-        </Col>
-        <Col>
-          <Button className="item"
-            onClick={
-              !!owner === true
-                ? () =>
-                    startRpsApplication(
-                      "9MRCZqLfrZhHkwYVIY8oEcXuMkjG3z05IabSuOZ8i/Y=",
-                      "velvet"
-                    )
-                : () => joinRpsApplication("velvet")
-            }
-          >
-            Velvet
-          </Button>
-        </Col>
-        <Col>
-          <Button className="item"
-            onClick={
-              !!owner === true
-                ? () =>
-                    startRpsApplication(
-                      "Jwn7j9G8aTukC2hiI0cTs5f7QZkTDoK8LhUqKqv6Vmw=",
-                      "satin"
-                    )
-                : () => joinRpsApplication("satin")
-            }
-          >
-            Satin
-          </Button>
-        </Col>
-        <Col>
-          <Button className="item"
-            onClick={
-              !!owner === true
-                ? () =>
-                    startRpsApplication(
-                      "Bm16fmcv990fA1mDaEMxvjyplCKoy4Rj559coBVkkfQ=",
-                      "chiffon"
-                    )
-                : () => joinRpsApplication("chiffon")
-            }
-          >
-            Chiffon
-          </Button>
-        </Col>
-        <Col>
-          <Button className="item"
-            onClick={
-              !!owner === true
-                ? () =>
-                    startRpsApplication(
-                      "zcvWxOBVngFR75Oa9X43qa0coMrupJ4fa23JYMvioBQ=",
-                      "lycra"
-                    )
-                : () => joinRpsApplication("lycra")
-            }
-          >
-            Lycra
-          </Button>
-        </Col>
-        <Col>
-          <Button className="item"
-            onClick={
-              !!owner === true
-                ? () =>
-                    startRpsApplication(
-                      "UYShzbGaO8PWRXMALDZyCVvENCVMLlPM+6CkgBuzqII=",
-                      "jersey"
-                    )
-                : () => joinRpsApplication("jersey")
-            }
-          >
-            Jersey
-          </Button>
-        </Col>
-      </Row>
-    </Container>
-  );
 
   function handleConnectWalletClick() {
     peraWallet
@@ -491,6 +228,279 @@ function Homepage() {
   //     "type": "appl"
   //   }
   // }
+
+  useEffect(() => {
+    // Reconnect to the session when the component is mounted
+    peraWallet
+      .reconnectSession()
+      .then((accounts) => {
+        peraWallet.connector.on("disconnect", handleDisconnectWalletClick);
+        console.log(accounts);
+        if (accounts.length) {
+          setAccountAddress(accounts[0]);
+        }
+      })
+      .catch((e) => console.log(e));
+  }, []);
+
+  return (
+    <>
+      <meta name="name" content="Testing frontend for makawe" />
+      <div class="header">
+        <div className="logo-cluster">
+          <img className="logo" src={logo} width="110" alt="logo" />
+          <h5>fashionblock</h5>
+        </div>
+        <a
+          className="gradient-button"
+          onClick={
+            isConnectedToPeraWallet
+              ? handleDisconnectWalletClick
+              : handleConnectWalletClick
+          }
+        >
+          {isConnectedToPeraWallet ? "Disconnect" : "Connect to Pera Wallet"}
+        </a>
+      </div>
+      <div className="main-content">
+          <a className="gradient-button" onClick={() => optInRpsApp()}>
+            OptIn
+          </a>
+        {customer ? (
+          <>
+              <a className="gradient-button" onClick={() => setOwner(false)}>
+                Join Game
+              </a>
+        
+              <a
+                className="gradient-button"
+                onClick={() => resolveRpsApplication()}
+              >
+                Resolve Game
+              </a>
+          </>
+        ) : (
+            <a className="gradient-button" onClick={() => setOwner(true)}>
+              Start Game
+            </a>
+        )}
+      </div>
+      <div className="slider">
+        <div class="slider-container">
+          <div class="slider-wrapper">
+            <div className="card">
+              <a
+                className="item"
+                onClick={
+                  !!owner === true
+                    ? () =>
+                        startRpsApplication(
+                          "UCJHKygxxmpjv5mnJhh0tVsIjt+JkTAJy2ToicycfSE=",
+                          "leather"
+                        )
+                    : () => joinRpsApplication("leather")
+                }
+              >
+                Leather
+              </a>
+            </div>
+            <div className="card">
+              <a
+                className="item"
+                onClick={
+                  !!owner === true
+                    ? () =>
+                        startRpsApplication(
+                          "8sgZtnkN4waEf7ImZMN65DIXfY73JyHtI8ka79Ecz98=",
+                          "silk"
+                        )
+                    : () => joinRpsApplication("silk")
+                }
+              >
+                Silk
+              </a>
+            </div>
+            <div className="card">
+              <a
+                className="item"
+                onClick={
+                  !!owner === true
+                    ? () =>
+                        startRpsApplication(
+                          "GtRNFDKuDoSwzXJ+TOeqc9LbkzocX8ZHTCklX+pvspE=",
+                          "polyester"
+                        )
+                    : () => joinRpsApplication("polyester")
+                }
+              >
+                Polyester
+              </a>
+            </div>
+            <div className="card">
+              <a
+                className="item"
+                onClick={
+                  !!owner === true
+                    ? () =>
+                        startRpsApplication(
+                          "aeOZhRyEGZk9RnVwJf1R5BXgJ36N74yyg9++eGchLoo=",
+                          "cotton"
+                        )
+                    : () => joinRpsApplication("cotton")
+                }
+              >
+                Cotton
+              </a>
+            </div>
+            <div className="card">
+              <a
+                className="item"
+                onClick={
+                  !!owner === true
+                    ? () =>
+                        startRpsApplication(
+                          "B60u8WB9KDg5rxtOgujGH/IR3iadRkg5ApXUB8AWL3o=",
+                          "linen"
+                        )
+                    : () => joinRpsApplication("linen")
+                }
+              >
+                Linen
+              </a>
+            </div>
+            <div className="card">
+              <a
+                className="item"
+                onClick={
+                  !!owner === true
+                    ? () =>
+                        startRpsApplication(
+                          "/rZyoubqKZ2PHxsbvtdyFMkJw6iaMhTqomvuvkrM63w=",
+                          "wool"
+                        )
+                    : () => joinRpsApplication("wool")
+                }
+              >
+                Wool
+              </a>
+            </div>
+            <div className="card">
+              <a
+                className="item"
+                onClick={
+                  !!owner === true
+                    ? () =>
+                        startRpsApplication(
+                          "8srChfPzOXbEN0nFxKqZrF21s2t0REruRWYanYjrSKQ=",
+                          "scuba"
+                        )
+                    : () => joinRpsApplication("scuba")
+                }
+              >
+                Scuba
+              </a>
+            </div>
+            <div className="card">
+              <a
+                className="item"
+                onClick={
+                  !!owner === true
+                    ? () =>
+                        startRpsApplication(
+                          "uazgThGkuWeiLLiTebMMEx0T74G+qI3LEZL7ld67SeQ=",
+                          "cashmere"
+                        )
+                    : () => joinRpsApplication("cashmere")
+                }
+              >
+                Cashmere
+              </a>
+            </div>
+            <div className="card">
+              <a
+                className="item"
+                onClick={
+                  !!owner === true
+                    ? () =>
+                        startRpsApplication(
+                          "9MRCZqLfrZhHkwYVIY8oEcXuMkjG3z05IabSuOZ8i/Y=",
+                          "velvet"
+                        )
+                    : () => joinRpsApplication("velvet")
+                }
+              >
+                Velvet
+              </a>
+            </div>
+            <div className="card">
+              <a
+                className="item"
+                onClick={
+                  !!owner === true
+                    ? () =>
+                        startRpsApplication(
+                          "Jwn7j9G8aTukC2hiI0cTs5f7QZkTDoK8LhUqKqv6Vmw=",
+                          "satin"
+                        )
+                    : () => joinRpsApplication("satin")
+                }
+              >
+                Satin
+              </a>
+            </div>
+            <div className="card">
+              <a
+                className="item"
+                onClick={
+                  !!owner === true
+                    ? () =>
+                        startRpsApplication(
+                          "Bm16fmcv990fA1mDaEMxvjyplCKoy4Rj559coBVkkfQ=",
+                          "chiffon"
+                        )
+                    : () => joinRpsApplication("chiffon")
+                }
+              >
+                Chiffon
+              </a>
+            </div>
+            <div className="card">
+              <a
+                className="item"
+                onClick={
+                  !!owner === true
+                    ? () =>
+                        startRpsApplication(
+                          "zcvWxOBVngFR75Oa9X43qa0coMrupJ4fa23JYMvioBQ=",
+                          "lycra"
+                        )
+                    : () => joinRpsApplication("lycra")
+                }
+              >
+                Lycra
+              </a>
+            </div>
+            <div className="card">
+              <a
+                className="item"
+                onClick={
+                  !!owner === true
+                    ? () =>
+                        startRpsApplication(
+                          "UYShzbGaO8PWRXMALDZyCVvENCVMLlPM+6CkgBuzqII=",
+                          "jersey"
+                        )
+                    : () => joinRpsApplication("jersey")
+                }
+              >
+                Jersey
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </>
+  );
 }
 
 export default Homepage;
