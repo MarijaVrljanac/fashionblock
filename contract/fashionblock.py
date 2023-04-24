@@ -147,7 +147,7 @@ def approval():
                 transfer_wager(Int(0), wager*Int(2)),
                 
                 # buyer's action 
-                App.globalPut(global_owner, Txn.accounts[0])
+                App.globalPut(global_owner, Txn.accounts[1])
             )
             .Else(
                 transfer_wager(Int(1), wager)

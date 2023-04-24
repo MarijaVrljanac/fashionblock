@@ -27,8 +27,8 @@ const peraWallet = new PeraWalletConnect();
 
 // The app ID on testnet
 // RPS app
-const appIndex = 204979770;
-const appAddress = "DYQ4JYHJUBPJJOOFODY3HDSGQIX2Q3XHDI2H6DJN4S4AKUM3WVLEHJYRLM";
+const appIndex = 205035085;
+const appAddress = "SRKMGO4SMJNXQIJF2JCOVQYFACGQ6GOWDYA5VBLTWN35CUOCL7ZPJG3VCE";
 
 // connect to the algorand node
 // token, address(server), port
@@ -218,6 +218,7 @@ function Homepage() {
       const suggestedParams = await algod.getTransactionParams().do();
       const appArgs = [
         new Uint8Array(Buffer.from("resolve")),
+        new Uint8Array(Buffer.from(realmaterial)),
       ];
 
       const accounts = [
