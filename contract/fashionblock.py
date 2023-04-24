@@ -73,7 +73,7 @@ def approval():
                     check_if_empty(Txn.accounts[1])
                 )
             ),
-            App.localPut(Txn.sender(), local_creator, Txn.accounts[1]),
+            App.localPut(Txn.sender(), local_creator, Txn.accounts[0]),
             App.localPut(Txn.sender(), local_id, Txn.application_args[1]),
             App.localPut(Txn.sender(), local_wager, Gtxn[1].amount()),
             App.localPut(Txn.sender(), local_material, Txn.application_args[2]),
@@ -177,10 +177,7 @@ def approval():
                     App.localGet(Txn.accounts[1], local_id) == App.localGet(Txn.accounts[0], local_id),
                     
                     # check if all the application arguments are there
-                    Txn.application_args.length() == Int(2),
-                    
-                    # check if Alice is lying
-                    App.localGet(Txn.sender(), local_material) == Sha256(Txn.application_args[6])
+                    Txn.application_args.length() == Int(2)
                 )
             ),
             # transform strings to ints

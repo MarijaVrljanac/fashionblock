@@ -27,8 +27,8 @@ const peraWallet = new PeraWalletConnect();
 
 // The app ID on testnet
 // RPS app
-const appIndex = 204090117;
-const appAddress = "IB5VDIGEE7BDN4N64W3O65CADOI5LTLCC75NSBDXMXFFPHCFK36LZKKJUM";
+const appIndex = 204979770;
+const appAddress = "DYQ4JYHJUBPJJOOFODY3HDSGQIX2Q3XHDI2H6DJN4S4AKUM3WVLEHJYRLM";
 
 // connect to the algorand node
 // token, address(server), port
@@ -115,12 +115,17 @@ function Homepage() {
       const suggestedParams = await algod.getTransactionParams().do();
       const appArgs = [
         new Uint8Array(Buffer.from("start")),
-        new Uint8Array(Buffer.from(hashedmaterial, "base64")),
+        new Uint8Array(Buffer.from("id")),
+        new Uint8Array(Buffer.from(material)),
+        new Uint8Array(Buffer.from("collection")),
+        new Uint8Array(Buffer.from("name")),
+        new Uint8Array(Buffer.from("image")),
+        new Uint8Array(Buffer.from("date")),
       ];
 
       // player 2 account
       const accounts = [
-        "WZRVALJVGSVMUOUBMPGB6ZWSE4RRHUPC2QRP66V4T72XZ5XGT3FU2J4F7M",
+        "TADSUM7VUM4JG5DJETDQQSBXU3ATMZ4C3NJCJURH3MYCHWZYBXDWZZSJZI",
       ];
 
       let actionTx = algosdk.makeApplicationNoOpTxn(
@@ -163,12 +168,13 @@ function Homepage() {
       const suggestedParams = await algod.getTransactionParams().do();
       const appArgs = [
         new Uint8Array(Buffer.from("accept")),
+        new Uint8Array(Buffer.from("id")),
         new Uint8Array(Buffer.from(material)),
       ];
 
       // sending opponents account (player 1)
       const accounts = [
-        "TADSUM7VUM4JG5DJETDQQSBXU3ATMZ4C3NJCJURH3MYCHWZYBXDWZZSJZI",
+        "WZRVALJVGSVMUOUBMPGB6ZWSE4RRHUPC2QRP66V4T72XZ5XGT3FU2J4F7M",
       ];
 
       let actionTx = algosdk.makeApplicationNoOpTxn(
@@ -276,15 +282,16 @@ function Homepage() {
       </div>
       {role ? (
         <>
-          <div className="main-content">
+          <div className="main-content" style={user ? {display: "flex", flexDirection: "row", alignItems: "center", justifyContent: "center"} : {}}>
+            <a className="gradient-button" onClick={() => optInRpsApp()}>
+              OptIn
+            </a>
             {user ? (
               <a className="gradient-button" onClick={() => setOwner(false)}>
                 Join
               </a>
             ) : (
-              <a className="gradient-button" onClick={() => optInRpsApp()}>
-                OptIn
-              </a>
+              <></>
             )}
           </div>
           <div className="slider">
