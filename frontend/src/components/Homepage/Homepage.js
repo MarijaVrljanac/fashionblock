@@ -211,14 +211,13 @@ function Homepage() {
     }
   }
 
-  // RESOLVE RPS WINNER
+  // RESOLVE RPS 
   async function resolveRpsApplication() {
     try {
       // get suggested params
       const suggestedParams = await algod.getTransactionParams().do();
       const appArgs = [
         new Uint8Array(Buffer.from("resolve")),
-        new Uint8Array(Buffer.from(realmaterial)),
       ];
 
       const accounts = [
