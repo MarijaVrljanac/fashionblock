@@ -144,13 +144,13 @@ def approval():
                 material_product == material_requested
             )
             .Then(
-                transfer_wager(Int(0), wager*Int(2)),
+                transfer_wager(Int(1), wager*Int(2)),
                 
                 # buyer's action 
-                App.globalPut(global_owner, Txn.accounts[1])
+                App.globalPut(global_owner, Txn.accounts[0])
             )
             .Else(
-                transfer_wager(Int(1), wager)
+                transfer_wager(Int(0), wager)
             )
         )
     
